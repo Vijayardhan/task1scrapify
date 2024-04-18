@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Attendance Table</title>
+    <style>
+        body {
+            overflow: hidden; /* Prevent scrolling */
+            background-image: url('images/img1.jpg'); /* Set background image */
+            background-size: cover; /* Cover the entire background */
+            background-position: center; /* Center the background image */
+            color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            position: relative;
+        }
+
+        .form-container {
+            width: 90%;
+            max-width: 400px; /* Limit the maximum width */
+            padding: 20px;
+            border: 2px solid #00FFFF;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        
+        .table-container {
+            width: 90%;
+            max-width: 800px; /* Limit the maximum width for larger screens */
+            padding: 20px;
+            border: 2px solid #00FFFF;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="tel"],
+        textarea {
+            width: calc(100% - 12px);
+            background-color: transparent;
+            color: white;
+            border: 1px solid #00FFFF;
+            padding: 8px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #00FFFF;
+            color: rgb(0, 0, 0);
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+            font: 1em sans-serif;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #5da0a0;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 14px; /* Default font size */
+        }
+
+        th, td {
+            border: 1px solid #00FFFF;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #2be4e4ed;
+            color: #000;
+            width: 80%;
+        }
+
+        .floating-square {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 100px;
+            height: 100px;
+            background-color: #00FFFF;
+            border: 2px solid white;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 100px;
+            font-size: 18px;
+            color: black;
+            cursor: pointer;
+        }
+
+        /* Position images */
+        .floating-image {
+            position: absolute;
+            border-radius: 10px;
+            pointer-events: auto;
+            width: 70px; /* Adjust width */
+            height: auto; /* Maintain aspect ratio */
+        }
+
+        /* Media Queries */
+        @media only screen and (max-width: 768px) {
+            .form-container {
+                width: 90%;
+            }
+            .table-container {
+                width: 90%;
+            }
+        }
+
+        @media only screen and (max-width: 480px) {
+            .table-container {
+                max-width: 300px; /* Adjust maximum width for smaller screens */
+            }
+
+            /* Adjust font size and padding for smaller screens */
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Personal Information Form</h2>
+        <form action="#" method="post">
+            <label for="fname">First Name:</label>
+            <input type="text" id="fname" name="fname" required><br>
+            
+            <label for="lname">Last Name:</label>
+            <input type="text" id="lname" name="lname" required><br>
+            
+            <label for="dob">Date of Birth:</label>
+            <input type="date" id="dob" name="dob" required><br>
+            
+            <label for="phone">Phone Number:</label>
+            <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required><br>
+            
+            <label for="address">Address:</label>
+            <textarea id="address" name="address" rows="4" required></textarea><br>
+            
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    
+    <div class="table-container">
+        <h2>School Attendance Table</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                    <th>Sun</th>
+                    <th>Total</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Student 1</td>
+                    <td>Pr</td>
+                    <td>Ab</td>
+                    <td>Pr</td>
+                    <td>Pr</td>
+                    <td>Ab</td>
+                    <td>Pr</td>
+                    <td>Ab</td>
+                    <td>4</td>
+                    <td>Good</td>
+                </tr>
+                <tr>
+                    <td>Student 2</td>
+                    <td>Ab</td>
+                    <td>Pr</td>
+                    <td>Pr</td>
+                    <td>Pr</td>
+                    <td>Ab</td>
+                    <td>Pr</td>
+                    <td>Ab</td>
+                    <td>5</td>
+                    <td>Good</td>
+                </tr>
+                <tr>
+                    <td>Student 3</td>
+                    <td>Pr</td>
+                    <td>Pr</td>
+                    <td>Ab</td>
+                    <td>Pr</td>
+                    <td>Ab</td>
+                    <td>Ab</td>
+                    <td>Pr</td>
+                    <td>4</td>
+                    <td>Needs Improvement</td>
+                </tr>
+                <tr>
+                    <td>Student 4</td>
+                    <td>Pr</td>
+                    <td>Pr</td>
+                    <td>Pr</td>
+                    <td>Pr</td>
+                    <td>Pr</td>
+                    <td>Pr</td>
+                    <td>Pr</td>
+                    <td>7</td>
+                    <td>Excellent</td>
+                </tr>
+                <tr>
+                    <td>Student 5</td>
+                    <td>Ab</td>
+                    <td>Ab</td>
+                    <td>Ab</td>
+                    <td>Ab</td>
+                    <td>Ab</td>
+                    <td>Ab</td>
+                    <td>Ab</td>
+                    <td>0</td>
+                    <td>Poor</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="floating-square" id="floatingSquare">
+        
+    </div>
+
+    <script>
+        // JavaScript for making the square draggable
+        const square = document.getElementById('floatingSquare');
+
+        let offsetX, offsetY, isDragging = false;
+
+        square.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            offsetX = e.clientX - square.getBoundingClientRect().left;
+            offsetY = e.clientY - square.getBoundingClientRect().top;
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                const x = e.clientX - offsetX;
+                const y = e.clientY - offsetY;
+                square.style.left = x + 'px';
+                square.style.top = y + 'px';
+            }
+        });
+
+        document.addEventListener('mouseup', () => {
+            isDragging = false;
+        });
+
+        // Dynamically add images and make them draggable
+        const images = ['img2.jpg', 'img3.jpg', 'img4.jpg'];
+
+        images.forEach((img, index) => {
+            const image = new Image();
+            image.src = `images/${img}`;
+            image.classList.add('floating-image');
+            image.style.zIndex = 9999 - index; // Ensure images appear in front of the square
+            document.body.appendChild(image);
+
+            let isImageDragging = false;
+            let imageOffsetX, imageOffsetY;
+
+            image.addEventListener('mousedown', (e) => {
+                isImageDragging = true;
+                imageOffsetX = e.clientX - image.getBoundingClientRect().left;
+                imageOffsetY = e.clientY - image.getBoundingClientRect().top;
+            });
+
+            document.addEventListener('mousemove', (e) => {
+                if (isImageDragging) {
+                    const x = e.clientX - imageOffsetX;
+                    const y = e.clientY - imageOffsetY;
+                    image.style.left = x + 'px';
+                    image.style.top = y + 'px';
+                }
+            });
+
+            document.addEventListener('mouseup', () => {
+                isImageDragging = false;
+            });
+        });
+    </script>
+</body>
+</html>

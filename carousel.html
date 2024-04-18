@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Carousel with Calculator</title>
+    <style>
+        body {
+            background-image: url('images/img1.jpg');
+            background-size: cover;
+            background-position: center;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .carousel-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            margin-top: 50px; /* Adjust top margin as needed */
+            position: relative; /* Add position relative to contain the absolute position of calculator */
+        }
+        .carousel-frame {
+            position: relative;
+            width: 150px;
+            height: 100px;
+            margin: 0 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        .carousel-frame.large {
+            width: 300px; /* Increased size for center image */
+            height: 200px; /* Increased size for center image */
+            z-index: 1;
+        }
+        .carousel-frame.small {
+            width: 100px;
+            height: 70px;
+            z-index: 0;
+        }
+        .carousel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .carousel-button-container {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .carousel-button {
+            background-color: rgba(255, 255, 255, 0.5);
+            border: none;
+            font-size: 20px;
+            padding: 5px 10px;
+            cursor: pointer;
+            margin: 0 5px; /* Add margin for spacing */
+        }
+        .carousel-button.left {
+            left: -25px; /* Adjust the position as needed */
+        }
+        .carousel-button.right {
+            right: -25px; /* Adjust the position as needed */
+        }
+        /* Calculator styles */
+        .calculator-container {
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+        }
+        .calculator-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        .calculator-row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        .calculator-button {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            margin: 5px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+        .calculator-input {
+            width: 212px;
+            height: 50px;
+            font-size: 20px;
+            margin: 5px;
+            border: 1px solid #ccc;
+            padding: 5px;
+            text-align: right;
+        }
+        .submit-button {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+/* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%); /* Center the modal */
+    width: 60%; /* Adjust width as needed */
+    height: 60%; /* Adjust height as needed */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+.modal-content {
+    display: block;
+    width: 100%; /* Image fills the width of the modal */
+    height: 100%; /* Image fills the height of the modal */
+    object-fit: contain; /* Image fills the content box while maintaining aspect ratio */
+    cursor: pointer; /* Add cursor pointer to indicate it's clickable */
+}
+
+
+
+
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel-container">
+        <div id="prev-frame" class="carousel-frame small">
+            <img id="prev-image" class="carousel-image" src="images/img1.jpg" alt="Previous Image">
+            <div class="carousel-button-container">
+                <button id="prev-button" class="carousel-button left">&lt;</button>
+            </div>
+        </div>
+        <div id="current-frame" class="carousel-frame large">
+            <img id="current-image" class="carousel-image" src="images/img2.jpg" alt="Current Image">
+        </div>
+        <div id="next-frame" class="carousel-frame small">
+            <img id="next-image" class="carousel-image" src="images/img3.jpg" alt="Next Image">
+            <div class="carousel-button-container">
+                <button id="next-button" class="carousel-button right">&gt;</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spacing -->
+    <div style="height: 20px;"></div>
+
+    <!-- Calculator -->
+    <div class="calculator-container">
+        <input type="text" id="calculator-display" class="calculator-input" readonly>
+        <div class="calculator-row">
+            <button class="calculator-button" onclick="clearDisplay()">C</button>
+            <button class="calculator-button" onclick="appendCharacter('7')">7</button>
+            <button class="calculator-button" onclick="appendCharacter('8')">8</button>
+            <button class="calculator-button" onclick="appendCharacter('9')">9</button>
+            <button class="calculator-button" onclick="appendCharacter('/')">/</button>
+        </div>
+        <div class="calculator-row">
+            <button class="calculator-button" onclick="appendCharacter('4')">4</button>
+            <button class="calculator-button" onclick="appendCharacter('5')">5</button>
+            <button class="calculator-button" onclick="appendCharacter('6')">6</button>
+            <button class="calculator-button" onclick="appendCharacter('*')">*</button>
+        </div>
+        <div class="calculator-row">
+            <button class="calculator-button" onclick="appendCharacter('1')">1</button>
+            <button class="calculator-button" onclick="appendCharacter('2')">2</button>
+            <button class="calculator-button" onclick="appendCharacter('3')">3</button>
+            <button class="calculator-button" onclick="appendCharacter('-')">-</button>
+        </div>
+        <div class="calculator-row">
+            <button class="calculator-button" onclick="appendCharacter('0')">0</button>
+            <button class="calculator-button" onclick="appendCharacter('.')">.</button>
+            <button class="calculator-button" onclick="calculate()">=</button>
+            <button class="calculator-button" onclick="appendCharacter('+')">+</button>
+        </div>
+    </div>
+
+    <!-- Submit button -->
+    <button class="submit-button">Submit</button>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="full-image">
+    </div>
+
+    <script>
+        var images = ['img1.jpg', 'img2.jpg', 'img3.jpg', 'img4.jpg'];
+        var currentIndex = 1; // Starting index for the current image
+
+        function updateImages() {
+            var prevIndex = (currentIndex - 1 + images.length) % images.length;
+            var nextIndex = (currentIndex + 1) % images.length;
+
+            document.getElementById('prev-image').src = 'images/' + images[prevIndex];
+            document.getElementById('current-image').src = 'images/' + images[currentIndex];
+            document.getElementById('next-image').src = 'images/' + images[nextIndex];
+        }
+
+        updateImages();
+
+        document.getElementById('prev-button').addEventListener('click', function() {
+            currentIndex = (currentIndex + 1) % images.length;
+            updateImages();
+        });
+
+        document.getElementById('next-button').addEventListener('click', function() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            updateImages();
+        });
+
+        // Add event listener to the center image to show modal with full image
+        document.getElementById('current-frame').addEventListener('click', function() {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("full-image");
+            modal.style.display = "block";
+            modalImg.src = this.getElementsByTagName('img')[0].src;
+            modalImg.style.maxWidth = '80%'; // Set maximum width for the modal image
+            modalImg.style.maxHeight = '80%'; // Set maximum height for the modal image
+
+            // Center the modal
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+
+            // Close the modal when the close button is clicked
+            var span = document.getElementsByClassName("close")[0];
+            span.onclick = function() {
+                modal.style.display = "none";
+                // Re-enable carousel navigation when the modal is closed
+                document.getElementById('prev-button').style.pointerEvents = 'auto';
+                document.getElementById('next-button').style.pointerEvents = 'auto';
+            }
+
+            // Prevent carousel navigation when the modal is open
+            document.getElementById('prev-button').style.pointerEvents = 'none';
+            document.getElementById('next-button').style.pointerEvents = 'none';
+        });
+
+        // Close the modal and re-enable carousel navigation when clicking outside the modal
+        window.onclick = function(event) {
+            var modal = document.getElementById("myModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+                document.getElementById('prev-button').style.pointerEvents = 'auto';
+                document.getElementById('next-button').style.pointerEvents = 'auto';
+            }
+        };
+
+        // Calculator functions
+        function clearDisplay() {
+            document.getElementById('calculator-display').value = '';
+        }
+
+        function appendCharacter(character) {
+            document.getElementById('calculator-display').value += character;
+        }
+
+        function calculate() {
+            var result;
+            try {
+                result = eval(document.getElementById('calculator-display').value);
+            } catch (error) {
+                result = 'Error';
+            }
+            document.getElementById('calculator-display').value = result;
+        }
+    </script>
+</body>
+</html>
